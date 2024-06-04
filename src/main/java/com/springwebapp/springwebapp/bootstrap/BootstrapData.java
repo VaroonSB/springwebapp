@@ -2,8 +2,10 @@ package com.springwebapp.springwebapp.bootstrap;
 
 import com.springwebapp.springwebapp.domain.Author;
 import com.springwebapp.springwebapp.domain.Book;
+import com.springwebapp.springwebapp.domain.Publisher;
 import com.springwebapp.springwebapp.repositories.AuthorRepository;
 import com.springwebapp.springwebapp.repositories.BookRepository;
+import com.springwebapp.springwebapp.repositories.PublisherRepository;
 import org.springframework.stereotype.Component;
 import org.springframework.boot.CommandLineRunner;
 
@@ -14,10 +16,13 @@ public class BootstrapData implements CommandLineRunner {
 
     private final AuthorRepository authorRepository;
     private final BookRepository bookRepository;
+    private final PublisherRepository publisherRepository;
 
-    public BootstrapData(AuthorRepository authorRepository, BookRepository bookRepository) {
+    public BootstrapData(AuthorRepository authorRepository, BookRepository bookRepository,
+                         PublisherRepository publisherRepository) {
         this.authorRepository = authorRepository;
         this.bookRepository = bookRepository;
+        this.publisherRepository = publisherRepository;
     }
 
     @Override
@@ -53,6 +58,15 @@ public class BootstrapData implements CommandLineRunner {
         System.out.println("Author Count: " + authorRepository.count());
         System.out.println("Book Count: " + bookRepository.count());
 
-        System.out.println();
+        Publisher publisher = new Publisher();
+        publisher.setPublisherName("My Publisher");
+        publisher.setAddress("123 Main");
+        Publisher publisherSaved =  publisherRepository.save(publisher);
+
+        dddSaved.setPublisher(publisherSaved);
+        ejbSaved.setPublisher(publisherSaved);
+        bookRepository.saveAll(Arrays.asList(dddSaved, ejbSaved));
+
+        System.out.println("Publisher Count: " + publisherRepository.count());
     }
 }
