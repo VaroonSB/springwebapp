@@ -51,6 +51,8 @@ public class BootstrapData implements CommandLineRunner {
 
         ericSaved.getBooks().add(dddSaved);
         maveSaved.getBooks().add(ejbSaved);
+        dddSaved.getAuthors().add(ericSaved);
+        ejbSaved.getAuthors().add(maveSaved);
 
         authorRepository.saveAll(Arrays.asList(ericSaved, maveSaved));
 
@@ -65,6 +67,7 @@ public class BootstrapData implements CommandLineRunner {
 
         dddSaved.setPublisher(publisherSaved);
         ejbSaved.setPublisher(publisherSaved);
+        authorRepository.saveAll(Arrays.asList(ericSaved, maveSaved));
         bookRepository.saveAll(Arrays.asList(dddSaved, ejbSaved));
 
         System.out.println("Publisher Count: " + publisherRepository.count());
