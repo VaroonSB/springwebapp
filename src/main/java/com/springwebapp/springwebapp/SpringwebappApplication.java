@@ -13,7 +13,7 @@ public class SpringwebappApplication {
 
         MyController controller = context.getBean(MyController.class);
 
-        System.out.println("from context bean - main()Ï");
+        System.out.println("from context bean - main()");
 
         System.out.println(controller.sayHello());
     }
